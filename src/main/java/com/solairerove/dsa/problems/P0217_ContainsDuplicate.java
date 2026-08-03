@@ -8,8 +8,8 @@ public class P0217_ContainsDuplicate {
     // time O(n), space O(n)
     public static boolean containsDuplicate(int[] nums) {
         Set<Integer> set = new HashSet<>();
-        for (int i = 0; i < nums.length; i++) {
-            if (!set.add(nums[i])) {
+        for (int num : nums) {
+            if (!set.add(num)) {
                 return true;
             }
         }
