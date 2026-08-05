@@ -11,16 +11,8 @@ public class P0014_LongestCommonPrefix {
         String first = strs[0];
         String last = strs[strs.length - 1];
         int i = 0;
-        while (i < first.length()) {
-            if (first.charAt(i) == last.charAt(i)) {
-                i++;
-            } else {
-                break;
-            }
-        }
-
-        if (i == 0) {
-            return "";
+        while (i < first.length() && first.charAt(i) == last.charAt(i)) {
+            i++;
         }
 
         return first.substring(0, i);
