@@ -7,6 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SuppressWarnings("NewClassNamingConvention")
 class P0021_MergeTwoSortedListsTest {
 
     @Test
