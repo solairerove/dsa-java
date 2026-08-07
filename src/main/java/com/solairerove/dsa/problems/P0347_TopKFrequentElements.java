@@ -13,26 +13,33 @@ import java.util.Set;
 public class P0347_TopKFrequentElements {
 
     // time O(n), space O(n)
-    @SuppressWarnings("unchecked")
     public static int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> cnt = new HashMap<>();
         for (int n : nums) {
             cnt.merge(n, 1, Integer::sum);
         }
 
-        List<Integer>[] freq = new List[nums.length + 1];
-        for (int i = 0; i < freq.length; i++) {
-            freq[i] = new ArrayList<>();
+        List<List<Integer>> freq = new ArrayList<>(nums.length + 1);
+        for (int i = 0; i <= nums.length; i++) {
+            freq.add(null);
         }
 
         for (Map.Entry<Integer, Integer> e : cnt.entrySet()) {
-            freq[e.getValue()].add(e.getKey());
+            int f = e.getValue();
+            if (freq.get(f) == null) {
+                freq.set(f, new ArrayList<>());
+            }
+            freq.get(f).add(e.getKey());
         }
 
         int[] res = new int[k];
         int idx = 0;
-        for (int i = freq.length - 1; i > 0 && idx < k; i--) {
-            for (int n : freq[i]) {
+        for (int i = nums.length; i > 0; i--) {
+            List<Integer> bucket = freq.get(i);
+            if (bucket == null) {
+                continue;
+            }
+            for (int n : bucket) {
                 res[idx++] = n;
                 if (idx == k) {
                     return res;
