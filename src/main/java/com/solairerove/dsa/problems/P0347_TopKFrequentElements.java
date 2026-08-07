@@ -1,8 +1,11 @@
 package com.solairerove.dsa.problems;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 public class P0347_TopKFrequentElements {
@@ -32,6 +35,29 @@ public class P0347_TopKFrequentElements {
             if (seen.add(maxK)) {
                 res[j] = maxK;
             }
+        }
+
+        return res;
+    }
+
+    // time O(d * log(k)), space O(d + k), d = distinct values in nums
+    public static int[] topKFrequentHeap(int[] nums, int k) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num : nums) {
+            freq.merge(num, 1, Integer::sum);
+        }
+
+        PriorityQueue<int[]> heap = new PriorityQueue<>(Comparator.comparingInt(a -> a[0]));
+        for (Map.Entry<Integer, Integer> entry : freq.entrySet()) {
+            heap.offer(new int[]{entry.getValue(), entry.getKey()});
+            if (heap.size() > k) {
+                heap.poll();
+            }
+        }
+
+        int[] res = new int[k];
+        for (int i = 0; i < k; i++) {
+            res[i] = Objects.requireNonNull(heap.poll())[1];
         }
 
         return res;

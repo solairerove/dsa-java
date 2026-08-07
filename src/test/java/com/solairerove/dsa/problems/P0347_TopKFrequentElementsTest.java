@@ -7,6 +7,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SuppressWarnings("NewClassNamingConvention")
 class P0347_TopKFrequentElementsTest {
@@ -42,7 +43,7 @@ class P0347_TopKFrequentElementsTest {
     void topKFrequentNaive_allDistinctTakeOne() {
         int[] res = P0347_TopKFrequentElements.topKFrequentNaive(new int[]{4, 7, 9}, 1);
         assertEquals(1, res.length);
-        assertEquals(Set.of(4, 7, 9).contains(res[0]), true);
+        assertTrue(Set.of(4, 7, 9).contains(res[0]));
     }
 
     @Test
@@ -65,5 +66,69 @@ class P0347_TopKFrequentElementsTest {
         }
 
         assertArrayEquals(new int[]{8, 9}, P0347_TopKFrequentElements.topKFrequentNaive(nums, 2));
+    }
+
+    private static Set<Integer> asSet(int[] nums) {
+        return Arrays.stream(nums).boxed().collect(java.util.stream.Collectors.toSet());
+    }
+
+    @Test
+    void topKFrequentHeap_example1() {
+        assertEquals(Set.of(1, 2), asSet(P0347_TopKFrequentElements.topKFrequentHeap(new int[]{1, 1, 1, 2, 2, 3}, 2)));
+    }
+
+    @Test
+    void topKFrequentHeap_example2() {
+        assertArrayEquals(new int[]{1}, P0347_TopKFrequentElements.topKFrequentHeap(new int[]{1}, 1));
+    }
+
+    @Test
+    void topKFrequentHeap_singleElementRepeated() {
+        assertArrayEquals(new int[]{5}, P0347_TopKFrequentElements.topKFrequentHeap(new int[]{5, 5, 5, 5}, 1));
+    }
+
+    @Test
+    void topKFrequentHeap_kEqualsDistinctCount() {
+        assertEquals(Set.of(1, 2, 3), asSet(P0347_TopKFrequentElements.topKFrequentHeap(new int[]{1, 1, 2, 2, 3}, 3)));
+    }
+
+    @Test
+    void topKFrequentHeap_negativeNumbers() {
+        assertEquals(Set.of(-1, 2), asSet(P0347_TopKFrequentElements.topKFrequentHeap(new int[]{-1, -1, -1, 2, 2, 3}, 2)));
+    }
+
+    @Test
+    void topKFrequentHeap_allDistinctTakeOne() {
+        int[] res = P0347_TopKFrequentElements.topKFrequentHeap(new int[]{4, 7, 9}, 1);
+        assertEquals(1, res.length);
+        assertTrue(Set.of(4, 7, 9).contains(res[0]));
+    }
+
+    @Test
+    void topKFrequentHeap_dropsLowestFrequency() {
+        assertEquals(Set.of(3, 2), asSet(P0347_TopKFrequentElements.topKFrequentHeap(new int[]{1, 2, 2, 3, 3, 3}, 2)));
+    }
+
+    @Test
+    void topKFrequentHeap_largeInput() {
+        int[] nums = new int[3000];
+        for (int i = 0; i < 1500; i++) {
+            nums[i] = 8;
+        }
+        for (int i = 1500; i < 2500; i++) {
+            nums[i] = 9;
+        }
+        for (int i = 2500; i < 3000; i++) {
+            nums[i] = 10;
+        }
+
+        assertEquals(Set.of(8, 9), asSet(P0347_TopKFrequentElements.topKFrequentHeap(nums, 2)));
+    }
+
+    @Test
+    void topKFrequentHeap_matchesNaive() {
+        int[] nums = {5, 5, 5, 4, 4, 4, 3, 3, 2, 2, 1, 0, 0, 0, 0};
+        assertEquals(asSet(P0347_TopKFrequentElements.topKFrequentNaive(nums, 3)),
+                asSet(P0347_TopKFrequentElements.topKFrequentHeap(nums, 3)));
     }
 }
