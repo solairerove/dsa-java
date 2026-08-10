@@ -20,9 +20,13 @@ public class P0705_DesignHashSet {
         }
     }
 
+    private int hash(int key) {
+        return key % set.length;
+    }
+
     // time O(n / k), space O(1)
     public void add(int key) {
-        ListNode curr = set[key % set.length];
+        ListNode curr = set[hash(key)];
         while (curr.next != null) {
             if (curr.next.key == key) {
                 return;
@@ -34,7 +38,7 @@ public class P0705_DesignHashSet {
 
     // time O(n / k), space O(1)
     public void remove(int key) {
-        ListNode curr = set[key % set.length];
+        ListNode curr = set[hash(key)];
         while (curr.next != null) {
             if (curr.next.key == key) {
                 curr.next = curr.next.next;
@@ -46,7 +50,7 @@ public class P0705_DesignHashSet {
 
     // time O(n / k), space O(1)
     public boolean contains(int key) {
-        ListNode curr = set[key % set.length];
+        ListNode curr = set[hash(key)];
         while (curr.next != null) {
             if (curr.next.key == key) {
                 return true;
