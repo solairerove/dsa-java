@@ -20,7 +20,7 @@ public class P0347_TopKFrequentElements {
         }
 
         List<List<Integer>> freq = new ArrayList<>(nums.length + 1);
-        for (int i = 0; i <= nums.length; i++) {
+        for (int i = 0; i <= nums.length + 1; i++) {
             freq.add(null);
         }
 
