@@ -40,4 +40,23 @@ class P0027_RemoveElementTest {
 
         assertEquals(0, k);
     }
+
+    @Test
+    void returnsZeroOnEmptyArray() {
+        int[] nums = {};
+
+        int k = P0027_RemoveElement.removeElement(nums, 1);
+
+        assertEquals(0, k);
+    }
+
+    @Test
+    void keepsEverythingWhenValAbsent() {
+        int[] nums = {1, 2, 3, 4};
+
+        int k = P0027_RemoveElement.removeElement(nums, 9);
+
+        assertEquals(4, k);
+        assertArrayEquals(new int[]{1, 2, 3, 4}, nums);
+    }
 }

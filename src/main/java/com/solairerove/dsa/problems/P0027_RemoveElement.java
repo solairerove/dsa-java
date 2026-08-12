@@ -4,10 +4,10 @@ public class P0027_RemoveElement {
 
     // time O(n), space O(1)
     public static int removeElement(int[] nums, int val) {
-        int i = 0, j = nums.length;
-        while (i < j) {
+        int i = 0, j = nums.length - 1;
+        while (i <= j) {
             if (nums[i] == val) {
-                nums[i] = nums[--j];
+                nums[i] = nums[j--];
             } else {
                 i++;
             }
