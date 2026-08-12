@@ -2,8 +2,9 @@ package com.solairerove.dsa.problems;
 
 public class P0238_ProductOfArrayExceptSelf {
 
+    // naive: two extra arrays
     // time O(n), space O(n)
-    public static int[] productExceptSelf(int[] nums) {
+    public static int[] productExceptSelfNaive(int[] nums) {
         // [1, 2, 4, 6]
         // keeping in head prefix product anyway, but write only excluding nums[i]
         // [1,] ps=1
@@ -34,6 +35,25 @@ public class P0238_ProductOfArrayExceptSelf {
         int[] res = new int[n];
         for (int i = 0; i < n; i++) {
             res[i] = prefixArr[i] * suffixArr[i];
+        }
+
+        return res;
+    }
+
+    // time O(n), space O(1) excluding output
+    public static int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] res = new int[n];
+
+        res[0] = 1;
+        for (int i = 1; i < n; i++) {
+            res[i] = res[i - 1] * nums[i - 1];
+        }
+
+        int postfix = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            res[i] *= postfix;
+            postfix *= nums[i];
         }
 
         return res;
