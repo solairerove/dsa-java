@@ -3,27 +3,22 @@ package com.solairerove.dsa.problems;
 public class P0706_DesignHashMap {
 
     private static class ListNode {
-        int key;
-        int val;
-        ListNode next;
+        private final int key;
+        private int val;
+        private ListNode next;
 
-        public ListNode(int key, int val, ListNode next) {
+        ListNode(int key, int val) {
             this.key = key;
             this.val = val;
-            this.next = next;
-        }
-
-        public ListNode() {
-            this(-1, -1, null);
         }
     }
 
-    private ListNode[] map;
+    private final ListNode[] map;
 
     public P0706_DesignHashMap() {
-        this.map = new ListNode[1000];
-        for (int i = 0; i < 1000; i++) {
-            map[i] = new ListNode();
+        map = new ListNode[10000];
+        for (int i = 0; i < map.length; i++) {
+            map[i] = new ListNode(-1, -1);
         }
     }
 
@@ -41,15 +36,15 @@ public class P0706_DesignHashMap {
             }
             curr = curr.next;
         }
-        curr.next = new ListNode(key, value, null);
+        curr.next = new ListNode(key, value);
     }
 
     // time O(n / k), space O(1)
     public int get(int key) {
-        ListNode curr = map[hash(key)].next;
-        while (curr != null) {
-            if (curr.key == key) {
-                return curr.val;
+        ListNode curr = map[hash(key)];
+        while (curr.next != null) {
+            if (curr.next.key == key) {
+                return curr.next.val;
             }
             curr = curr.next;
         }
