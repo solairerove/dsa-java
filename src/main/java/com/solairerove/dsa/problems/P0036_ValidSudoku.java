@@ -1,34 +1,30 @@
 package com.solairerove.dsa.problems;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 public class P0036_ValidSudoku {
+
+    private final static int len = 9;
 
     // time O(1), space O(1)
     public static boolean isValidSudoku(char[][] board) {
-        Map<Integer, Set<Character>> cols = new HashMap<>();
-        Map<Integer, Set<Character>> rows = new HashMap<>();
-        Map<String, Set<Character>> squares = new HashMap<>();
+        boolean[][] rows = new boolean[len][len];
+        boolean[][] cols = new boolean[len][len];
+        boolean[][] squares = new boolean[len][len];
 
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
+        for (int r = 0; r < len; r++) {
+            for (int c = 0; c < len; c++) {
                 if (board[r][c] == '.') {
                     continue;
                 }
 
-                String sqrKey = (r / 3) + "," + (c / 3);
-                if (rows.computeIfAbsent(r, k -> new HashSet<>()).contains(board[r][c]) ||
-                        cols.computeIfAbsent(c, k -> new HashSet<>()).contains(board[r][c]) ||
-                        squares.computeIfAbsent(sqrKey, k -> new HashSet<>()).contains(board[r][c])) {
+                int num = board[r][c] - '0' - 1;
+                int box = r / 3 * 3 + c / 3;
+                if (rows[r][num] || cols[c][num] || squares[box][num]) {
                     return false;
                 }
 
-                rows.get(r).add(board[r][c]);
-                cols.get(c).add(board[r][c]);
-                squares.get(sqrKey).add(board[r][c]);
+                rows[r][num] = true;
+                cols[c][num] = true;
+                squares[box][num] = true;
             }
         }
 
