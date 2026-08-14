@@ -111,6 +111,122 @@ class P0128_LongestConsecutiveSequenceTest {
         }
     }
 
+    @Test
+    void longestConsecutiveSet_example1() {
+        assertEquals(4, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{100, 4, 200, 1, 3, 2}));
+    }
+
+    @Test
+    void longestConsecutiveSet_example2() {
+        assertEquals(9, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}));
+    }
+
+    @Test
+    void longestConsecutiveSet_example3() {
+        assertEquals(3, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{1, 0, 1, 2}));
+    }
+
+    @Test
+    void longestConsecutiveSet_emptyArray() {
+        assertEquals(0, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{}));
+    }
+
+    @Test
+    void longestConsecutiveSet_singleElement() {
+        assertEquals(1, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{42}));
+    }
+
+    @Test
+    void longestConsecutiveSet_allDuplicates() {
+        assertEquals(1, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{7, 7, 7, 7}));
+    }
+
+    @Test
+    void longestConsecutiveSet_noConsecutivePairs() {
+        assertEquals(1, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{10, 30, 20, 50}));
+    }
+
+    @Test
+    void longestConsecutiveSet_alreadySorted() {
+        assertEquals(6, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{1, 2, 3, 4, 5, 6}));
+    }
+
+    @Test
+    void longestConsecutiveSet_reverseSorted() {
+        assertEquals(6, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{6, 5, 4, 3, 2, 1}));
+    }
+
+    @Test
+    void longestConsecutiveSet_mergesTwoRunsViaMiddleValue() {
+        assertEquals(7, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{1, 2, 3, 5, 6, 7, 4}));
+    }
+
+    @Test
+    void longestConsecutiveSet_mergeArrivesLast() {
+        assertEquals(5, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{1, 2, 4, 5, 3}));
+    }
+
+    @Test
+    void longestConsecutiveSet_negativeAndPositiveSpanningZero() {
+        assertEquals(5, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{-2, -1, 0, 1, 2}));
+    }
+
+    @Test
+    void longestConsecutiveSet_allNegative() {
+        assertEquals(4, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{-5, -3, -4, -6, -1}));
+    }
+
+    @Test
+    void longestConsecutiveSet_twoEqualLengthRuns() {
+        assertEquals(3, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{1, 2, 3, 10, 11, 12}));
+    }
+
+    @Test
+    void longestConsecutiveSet_longestRunIsNotTheFirstSeen() {
+        assertEquals(4, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{9, 1, 50, 2, 3, 4}));
+    }
+
+    // LeetCode constrains values to [-10^9, 10^9]; Integer.MIN_VALUE/MAX_VALUE
+    // would wrap on the num + 1 / num - 1 lookups
+    @Test
+    void longestConsecutiveSet_constraintBoundaryValues() {
+        assertEquals(2, P0128_LongestConsecutiveSequence.longestConsecutiveSet(
+                new int[]{-1_000_000_000, -999_999_999, 1_000_000_000}));
+    }
+
+    @Test
+    void longestConsecutiveSet_duplicatesInsideRun() {
+        assertEquals(4, P0128_LongestConsecutiveSequence.longestConsecutiveSet(new int[]{1, 2, 2, 3, 3, 3, 4}));
+    }
+
+    @Test
+    void longestConsecutiveSet_matchesBruteForceOnRandomInput() {
+        Random random = new Random(128);
+        for (int t = 0; t < 300; t++) {
+            int[] nums = new int[random.nextInt(25)];
+            for (int i = 0; i < nums.length; i++) {
+                nums[i] = random.nextInt(20) - 10;
+            }
+
+            assertEquals(bruteForce(nums), P0128_LongestConsecutiveSequence.longestConsecutiveSet(nums));
+        }
+    }
+
+    @Test
+    void bothApproachesAgreeOnRandomInput() {
+        Random random = new Random(1280);
+        for (int t = 0; t < 300; t++) {
+            int[] nums = new int[random.nextInt(25)];
+            for (int i = 0; i < nums.length; i++) {
+                nums[i] = random.nextInt(20) - 10;
+            }
+
+            assertEquals(
+                    P0128_LongestConsecutiveSequence.longestConsecutive(nums),
+                    P0128_LongestConsecutiveSequence.longestConsecutiveSet(nums));
+        }
+    }
+
     private static int bruteForce(int[] nums) {
         if (nums.length == 0) {
             return 0;
