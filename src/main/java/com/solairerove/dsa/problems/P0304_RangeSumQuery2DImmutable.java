@@ -2,16 +2,14 @@ package com.solairerove.dsa.problems;
 
 public class P0304_RangeSumQuery2DImmutable {
 
-    int[][] ps;
+    final int[][] ps;
 
     public P0304_RangeSumQuery2DImmutable(int[][] matrix) {
-        int rows = matrix.length, cols = matrix[0].length;
-        ps = new int[rows + 1][cols + 1];
-        for (int r = 0; r < rows; r++) {
-            int currentRowPrefix = 0;
-            for (int c = 0; c < cols; c++) {
-                currentRowPrefix += matrix[r][c];
-                ps[r + 1][c + 1] = currentRowPrefix + ps[r][c + 1];
+        int rows = matrix.length + 1, cols = matrix[0].length + 1;
+        ps = new int[rows][cols];
+        for (int r = 1; r < rows; r++) {
+            for (int c = 1; c < cols; c++) {
+                ps[r][c] = ps[r - 1][c] + ps[r][c - 1] - ps[r - 1][c - 1] + matrix[r - 1][c - 1];
             }
         }
     }
@@ -22,11 +20,7 @@ public class P0304_RangeSumQuery2DImmutable {
         col1++;
         row2++;
         col2++;
-        int bottomRight = ps[row2][col2];
-        int topRight = ps[row1 - 1][col2];
-        int bottomLeft = ps[row2][col1 - 1];
-        int topLeft = ps[row1 - 1][col1 - 1];
 
-        return bottomRight - topRight - bottomLeft + topLeft;
+        return ps[row2][col2] - ps[row1 - 1][col2] - ps[row2][col1 - 1] + ps[row1 - 1][col1 - 1];
     }
 }
