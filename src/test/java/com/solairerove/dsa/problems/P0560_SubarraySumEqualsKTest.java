@@ -3,6 +3,7 @@ package com.solairerove.dsa.problems;
 import org.junit.jupiter.api.Test;
 
 import static com.solairerove.dsa.problems.P0560_SubarraySumEqualsK.subarraySum;
+import static com.solairerove.dsa.problems.P0560_SubarraySumEqualsK.subarraySumNaive;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SuppressWarnings("NewClassNamingConvention")
@@ -56,5 +57,55 @@ class P0560_SubarraySumEqualsKTest {
     @Test
     void shouldCountOverlappingSubarrays() {
         assertEquals(4, subarraySum(new int[]{3, 4, 7, 2, -3, 1, 4, 2}, 7));
+    }
+
+    @Test
+    void shouldCountTwoSubarraysInExampleOneNaive() {
+        assertEquals(2, subarraySumNaive(new int[]{1, 1, 1}, 2));
+    }
+
+    @Test
+    void shouldCountTwoSubarraysInExampleTwoNaive() {
+        assertEquals(2, subarraySumNaive(new int[]{1, 2, 3}, 3));
+    }
+
+    @Test
+    void shouldHandleSingleElementMatchNaive() {
+        assertEquals(1, subarraySumNaive(new int[]{5}, 5));
+    }
+
+    @Test
+    void shouldHandleSingleElementNoMatchNaive() {
+        assertEquals(0, subarraySumNaive(new int[]{5}, 3));
+    }
+
+    @Test
+    void shouldHandleNegativeNumbersNaive() {
+        assertEquals(3, subarraySumNaive(new int[]{1, -1, 0}, 0));
+    }
+
+    @Test
+    void shouldHandleAllZerosWithZeroTargetNaive() {
+        assertEquals(10, subarraySumNaive(new int[]{0, 0, 0, 0}, 0));
+    }
+
+    @Test
+    void shouldHandleNegativeTargetNaive() {
+        assertEquals(1, subarraySumNaive(new int[]{-1, -1, 1}, -2));
+    }
+
+    @Test
+    void shouldReturnZeroWhenNoSubarrayMatchesNaive() {
+        assertEquals(0, subarraySumNaive(new int[]{1, 2, 3}, 100));
+    }
+
+    @Test
+    void shouldCountWholeArrayAsSingleMatchNaive() {
+        assertEquals(1, subarraySumNaive(new int[]{2, 4, 6}, 12));
+    }
+
+    @Test
+    void shouldCountOverlappingSubarraysNaive() {
+        assertEquals(4, subarraySumNaive(new int[]{3, 4, 7, 2, -3, 1, 4, 2}, 7));
     }
 }
