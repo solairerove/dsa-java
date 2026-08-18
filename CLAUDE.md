@@ -26,7 +26,7 @@ LeetCode solutions in Java, one file per problem under `src/main/java/com/solair
 
 - Maven project (`pom.xml`), Java 21, JUnit 5 (Jupiter) for tests.
 - `src/main/java/com/solairerove/dsa/problems/PNNNN_TitleCaseName.java` — one file per problem, numbered with the LeetCode problem ID (zero-padded to 4 digits), followed by the title in PascalCase (e.g. `P0021_MergeTwoSortedLists.java`). Contains a public class with the solution as a `public static` method. No `mod.rs`-style manual wiring needed — Maven/JUnit discover files by convention.
-- `src/test/java/com/solairerove/dsa/problems/PNNNN_TitleCaseNameTest.java` — mirrors the solution file name with a `Test` suffix, in the same package, using JUnit 5 (`@Test`, `assertEquals`, etc).
+- `src/test/java/com/solairerove/dsa/problems/PNNNN_TitleCaseNameTest.java` — mirrors the solution file name with a `Test` suffix, in the same package, using JUnit 5 (`@Test`, `assertEquals`, etc). Test class is annotated `@SuppressWarnings("NewClassNamingConvention")` (silences the IDE inspection over the `PNNNN_` prefix).
 - `src/main/java/com/solairerove/dsa/common/` — shared data structures/helpers reused across problems (e.g. `ListNode` for linked-list problems, with `fromList`/`toList` conversion helpers for building test fixtures).
 
 ### Conventions observed in existing solutions
