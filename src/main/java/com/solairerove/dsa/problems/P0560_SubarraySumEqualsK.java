@@ -15,7 +15,7 @@ public class P0560_SubarraySumEqualsK {
             currSum += num;
             int guess = currSum - k;
             res += ps.getOrDefault(guess, 0);
-            ps.put(currSum, ps.getOrDefault(currSum, 0) + 1);
+            ps.merge(currSum, 1, Integer::sum);
         }
 
         return res;
