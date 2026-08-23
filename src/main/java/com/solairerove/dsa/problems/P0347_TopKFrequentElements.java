@@ -62,27 +62,30 @@ public class P0347_TopKFrequentElements {
         return Arrays.copyOfRange(arr, arr.length - k, arr.length);
     }
 
-    private static void quickSelect(int[] arr, int i, int j, int k, Map<Integer, Integer> freq) {
-        if (i >= j) return;
+    private static void quickSelect(int[] arr, int lo, int hi, int k, Map<Integer, Integer> freq) {
+        if (lo >= hi) return;
 
-        int pivot = partition(arr, i, j, freq);
-        if (pivot == k) return;
-        if (pivot < k) quickSelect(arr, pivot + 1, j, k, freq);
-        else quickSelect(arr, i, pivot - 1, k, freq);
+        int[] mid = partition(arr, lo, hi, freq);
+        if (k < mid[0]) quickSelect(arr, lo, mid[0] - 1, k, freq);
+        else if (k > mid[1]) quickSelect(arr, mid[1] + 1, hi, k, freq);
     }
 
-    private static int partition(int[] arr, int low, int high, Map<Integer, Integer> freq) {
-        int pivot = freq.get(arr[high]);
-        int i = low;
-        for (int j = low; j < high; j++) {
-            if (freq.get(arr[j]) < pivot) {
-                swap(arr, i, j);
+    // dutch national flag: returns bounds of the block whose frequency equals the pivot's
+    private static int[] partition(int[] arr, int lo, int hi, Map<Integer, Integer> freq) {
+        int pivot = freq.get(arr[lo + (hi - lo) / 2]);
+        int l = lo, i = lo, r = hi;
+        while (i <= r) {
+            int f = freq.get(arr[i]);
+            if (f < pivot) {
+                swap(arr, l++, i++);
+            } else if (f > pivot) {
+                swap(arr, i, r--);
+            } else {
                 i++;
             }
         }
-        swap(arr, i, high);
 
-        return i;
+        return new int[]{l, r};
     }
 
     private static void swap(int[] arr, int i, int j) {
