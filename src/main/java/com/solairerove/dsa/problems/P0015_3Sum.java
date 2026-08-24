@@ -14,7 +14,7 @@ public class P0015_3Sum {
 
         List<List<Integer>> res = new ArrayList<>();
         int n = nums.length;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n - 2; i++) {
             if (nums[i] > 0) break;
             if (i > 0 && nums[i] == nums[i - 1]) continue;
 
