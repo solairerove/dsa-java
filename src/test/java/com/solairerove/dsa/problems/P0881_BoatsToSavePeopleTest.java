@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import static com.solairerove.dsa.problems.P0881_BoatsToSavePeople.numRescueBoats;
+import static com.solairerove.dsa.problems.P0881_BoatsToSavePeople.numRescueBoatsCountingSort;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SuppressWarnings("NewClassNamingConvention")
@@ -76,6 +77,74 @@ class P0881_BoatsToSavePeopleTest {
                 people[i] = 1 + rnd.nextInt(limit);
             }
             assertEquals(bruteForce(people.clone(), limit), numRescueBoats(people.clone(), limit));
+        }
+    }
+
+    @Test
+    void shouldSolveExampleOneCountingSort() {
+        assertEquals(1, numRescueBoatsCountingSort(new int[]{1, 2}, 3));
+    }
+
+    @Test
+    void shouldSolveExampleTwoCountingSort() {
+        assertEquals(3, numRescueBoatsCountingSort(new int[]{3, 2, 2, 1}, 3));
+    }
+
+    @Test
+    void shouldSolveExampleThreeCountingSort() {
+        assertEquals(4, numRescueBoatsCountingSort(new int[]{3, 5, 3, 4}, 5));
+    }
+
+    @Test
+    void shouldHandleSinglePersonCountingSort() {
+        assertEquals(1, numRescueBoatsCountingSort(new int[]{5}, 5));
+    }
+
+    @Test
+    void shouldHandleEveryoneAtLimitCountingSort() {
+        assertEquals(4, numRescueBoatsCountingSort(new int[]{4, 4, 4, 4}, 4));
+    }
+
+    @Test
+    void shouldPairAllWhenLimitIsGenerousCountingSort() {
+        assertEquals(3, numRescueBoatsCountingSort(new int[]{1, 1, 1, 1, 1, 1}, 2));
+    }
+
+    @Test
+    void shouldPairLightestWithHeaviestCountingSort() {
+        assertEquals(3, numRescueBoatsCountingSort(new int[]{1, 1, 1, 5, 5, 5}, 6));
+    }
+
+    @Test
+    void shouldHandleUnsortedInputCountingSort() {
+        assertEquals(3, numRescueBoatsCountingSort(new int[]{5, 1, 5, 1, 5, 1}, 6));
+    }
+
+    @Test
+    void shouldHandleOddCountWithLeftoverPersonCountingSort() {
+        assertEquals(3, numRescueBoatsCountingSort(new int[]{2, 2, 2, 2, 2}, 4));
+    }
+
+    @Test
+    void shouldHandleAllEqualHalfOfLimitCountingSort() {
+        assertEquals(2, numRescueBoatsCountingSort(new int[]{3, 3, 3, 3}, 6));
+    }
+
+    @Test
+    void shouldHandleLargeSpreadCountingSort() {
+        assertEquals(4, numRescueBoatsCountingSort(new int[]{1, 2, 3, 4, 5, 6, 7, 8}, 9));
+    }
+
+    @Test
+    void shouldMatchBruteForceOnRandomInputsCountingSort() {
+        Random rnd = new Random(42);
+        for (int t = 0; t < 300; t++) {
+            int limit = 1 + rnd.nextInt(10);
+            int[] people = new int[1 + rnd.nextInt(8)];
+            for (int i = 0; i < people.length; i++) {
+                people[i] = 1 + rnd.nextInt(limit);
+            }
+            assertEquals(bruteForce(people.clone(), limit), numRescueBoatsCountingSort(people.clone(), limit));
         }
     }
 
