@@ -62,4 +62,59 @@ class P0121_BestTimeToBuyAndSellStockTest {
 
         assertEquals(2, P0121_BestTimeToBuyAndSellStock.maxProfit(prices));
     }
+    @Test
+    void returnsMaxProfitOnSampleInputMinCost() {
+        int[] prices = {7, 1, 5, 3, 6, 4};
+
+        assertEquals(5, P0121_BestTimeToBuyAndSellStock.maxProfitMinCost(prices));
+    }
+
+    @Test
+    void returnsZeroWhenPricesOnlyDecreaseMinCost() {
+        int[] prices = {7, 6, 4, 3, 1};
+
+        assertEquals(0, P0121_BestTimeToBuyAndSellStock.maxProfitMinCost(prices));
+    }
+
+    @Test
+    void returnsZeroOnSinglePriceMinCost() {
+        int[] prices = {5};
+
+        assertEquals(0, P0121_BestTimeToBuyAndSellStock.maxProfitMinCost(prices));
+    }
+
+    @Test
+    void returnsZeroOnEmptyInputMinCost() {
+        int[] prices = {};
+
+        assertEquals(0, P0121_BestTimeToBuyAndSellStock.maxProfitMinCost(prices));
+    }
+
+    @Test
+    void returnsZeroWhenAllPricesEqualMinCost() {
+        int[] prices = {3, 3, 3, 3};
+
+        assertEquals(0, P0121_BestTimeToBuyAndSellStock.maxProfitMinCost(prices));
+    }
+
+    @Test
+    void returnsFullRangeWhenPricesIncreaseMinCost() {
+        int[] prices = {1, 2, 3, 4, 5};
+
+        assertEquals(4, P0121_BestTimeToBuyAndSellStock.maxProfitMinCost(prices));
+    }
+
+    @Test
+    void picksLaterLowerValleyForBiggerProfitMinCost() {
+        int[] prices = {3, 2, 6, 1, 9};
+
+        assertEquals(8, P0121_BestTimeToBuyAndSellStock.maxProfitMinCost(prices));
+    }
+
+    @Test
+    void returnsProfitOnTwoElementsMinCost() {
+        int[] prices = {2, 4};
+
+        assertEquals(2, P0121_BestTimeToBuyAndSellStock.maxProfitMinCost(prices));
+    }
 }
