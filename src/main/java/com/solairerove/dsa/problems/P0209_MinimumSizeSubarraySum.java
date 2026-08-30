@@ -19,4 +19,21 @@ public class P0209_MinimumSizeSubarraySum {
 
         return res == Integer.MAX_VALUE ? 0 : res;
     }
+
+    // time O(n), space O(1)
+    public static int minSubArrayLenShrink(int target, int[] nums) {
+        int l = 0, r = 0;
+        int windowSum = 0;
+        int res = Integer.MAX_VALUE;
+        while (r < nums.length) {
+            windowSum += nums[r];
+            while (windowSum >= target) {
+                res = Math.min(res, r - l + 1);
+                windowSum -= nums[l++];
+            }
+            r++;
+        }
+
+        return res == Integer.MAX_VALUE ? 0 : res;
+    }
 }
