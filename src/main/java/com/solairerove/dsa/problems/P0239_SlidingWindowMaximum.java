@@ -1,6 +1,5 @@
 package com.solairerove.dsa.problems;
 
-import java.util.Objects;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
@@ -17,7 +16,7 @@ public class P0239_SlidingWindowMaximum {
         for (int i = 0; i < n; i++) {
             heap.offer(new int[]{nums[i], i});
             if (i >= k - 1) {
-                while (Objects.requireNonNull(heap.peek())[1] <= i - k) heap.poll();
+                while (heap.peek()[1] <= i - k) heap.poll();
                 res[idx++] = heap.peek()[0];
             }
         }
