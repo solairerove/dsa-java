@@ -56,4 +56,54 @@ class P0003_LongestSubstringWithoutRepeatingCharactersTest {
     void handlesMixedCase() {
         assertEquals(4, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstring("aAbBa"));
     }
+
+    @Test
+    void returnsThreeForAbcabcbbCount() {
+        assertEquals(3, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstringCount("abcabcbb"));
+    }
+
+    @Test
+    void returnsOneForRepeatedSingleCharCount() {
+        assertEquals(1, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstringCount("bbbbb"));
+    }
+
+    @Test
+    void returnsThreeForPwwkewCount() {
+        assertEquals(3, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstringCount("pwwkew"));
+    }
+
+    @Test
+    void returnsZeroOnEmptyStringCount() {
+        assertEquals(0, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstringCount(""));
+    }
+
+    @Test
+    void returnsOneOnSingleCharCount() {
+        assertEquals(1, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstringCount("a"));
+    }
+
+    @Test
+    void returnsFullLengthWhenAllDistinctCount() {
+        assertEquals(5, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstringCount("abcde"));
+    }
+
+    @Test
+    void handlesSpacesAndDigitsCount() {
+        assertEquals(3, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstringCount("a 1a 1"));
+    }
+
+    @Test
+    void handlesDuplicateFarBehindWindowCount() {
+        assertEquals(2, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstringCount("abba"));
+    }
+
+    @Test
+    void handlesSymbolsCount() {
+        assertEquals(4, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstringCount("!@#$!"));
+    }
+
+    @Test
+    void handlesMixedCaseCount() {
+        assertEquals(4, P0003_LongestSubstringWithoutRepeatingCharacters.lengthOfLongestSubstringCount("aAbBa"));
+    }
 }
