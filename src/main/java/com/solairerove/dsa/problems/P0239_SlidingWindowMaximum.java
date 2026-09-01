@@ -29,17 +29,14 @@ public class P0239_SlidingWindowMaximum {
     public static int[] maxSlidingWindowDeque(int[] nums, int k) {
         int n = nums.length;
         int[] res = new int[n - k + 1];
-        Deque<Integer> q = new LinkedList<>();
+        Deque<Integer> dq = new LinkedList<>();
 
-        int l = 0, r = 0;
-        while (r < n) {
-            while (!q.isEmpty() && nums[q.getLast()] < nums[r]) q.removeLast();
-            q.addLast(r);
+        for (int i = 0; i < n; i++) {
+            while (!dq.isEmpty() && dq.peekFirst() <= i - k) dq.pollFirst();
+            while (!dq.isEmpty() && nums[dq.peekLast()] < nums[i]) dq.pollLast();
 
-            if (l > q.getFirst()) q.removeFirst();
-            if ((r + 1) >= k) res[l++] = nums[q.getFirst()];
-
-            r++;
+            dq.offerLast(i);
+            if (i >= k - 1) res[i - k + 1] = nums[dq.peekFirst()];
         }
 
         return res;
