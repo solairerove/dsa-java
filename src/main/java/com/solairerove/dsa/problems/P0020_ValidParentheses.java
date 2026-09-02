@@ -26,4 +26,22 @@ public class P0020_ValidParentheses {
 
         return stack.isEmpty();
     }
+
+    // time O(n), space O(n)
+    public static boolean isValidArray(String s) {
+        char[] stack = new char[s.length()];
+        int top = 0;
+        for (char ch : s.toCharArray()) {
+            switch (ch) {
+                case '(': stack[top++] = ')'; break;
+                case '[': stack[top++] = ']'; break;
+                case '{': stack[top++] = '}'; break;
+                default:
+                    if (top == 0 || stack[--top] != ch) return false;
+                    break;
+            }
+        }
+
+        return top == 0;
+    }
 }
