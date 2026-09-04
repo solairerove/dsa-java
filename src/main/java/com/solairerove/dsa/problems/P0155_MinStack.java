@@ -23,8 +23,6 @@ public class P0155_MinStack {
 
     // time O(1), space O(1)
     public void pop() {
-        if (stack.isEmpty()) return;
-
         int top = stack.pop();
         if (top == prefixMin.peek()) {
             prefixMin.pop();

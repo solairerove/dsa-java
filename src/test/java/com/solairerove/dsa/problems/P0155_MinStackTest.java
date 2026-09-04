@@ -80,16 +80,6 @@ class P0155_MinStackTest {
     }
 
     @Test
-    void popOnEmptyIsNoOp() {
-        P0155_MinStack stack = new P0155_MinStack();
-
-        stack.pop();
-        stack.push(4);
-        assertEquals(4, stack.top());
-        assertEquals(4, stack.getMin());
-    }
-
-    @Test
     void reusableAfterEmptying() {
         P0155_MinStack stack = new P0155_MinStack();
 
