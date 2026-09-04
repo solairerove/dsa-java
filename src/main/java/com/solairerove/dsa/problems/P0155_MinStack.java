@@ -38,4 +38,49 @@ public class P0155_MinStack {
     public int getMin() {
         return prefixMin.peek();
     }
+
+    public static class MinStackLinkedList {
+
+        private static class Node {
+            int val;
+            int min;
+            Node next;
+
+            private Node(int val, int min, Node next) {
+                this.val = val;
+                this.min = min;
+                this.next = next;
+            }
+        }
+
+        private Node head;
+
+        public MinStackLinkedList() {
+
+        }
+
+        // time O(1), space O(1)
+        public void push(int value) {
+            if (head == null) {
+                head = new Node(value, value, null);
+            } else {
+                head = new Node(value, Math.min(value, head.min), head);
+            }
+        }
+
+        // time O(1), space O(1)
+        public void pop() {
+            head = head.next;
+        }
+
+        // time O(1), space O(1)
+        public int top() {
+            return head.val;
+        }
+
+        // time O(1), space O(1)
+        public int getMin() {
+            return head.min;
+        }
+    }
 }
