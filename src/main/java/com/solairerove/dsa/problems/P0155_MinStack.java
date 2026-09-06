@@ -22,6 +22,24 @@ public class P0155_MinStack {
     }
 
     // time O(1), space O(1)
+    // NOTE: the local `int top` is load-bearing, do not inline it.
+    // Key: `==` is defined both for references and for primitives. `>=` is defined only for primitives.
+    // stack.pop() returns Integer. prefixMin.peek() returns Integer.
+    // - stack.pop() == prefixMin.peek() - both sides are Integer, so the compiler picks the reference
+    //   version. That compares object addresses. No unboxing happens.
+    // - prefixMin.peek() >= stack.pop() - no such operator exists for references, so the compiler is
+    //   forced to unbox both to int. That compares values. Always correct.
+    // - int top = stack.pop(); top == prefixMin.peek() - the left side is already int, so the right
+    //   side gets unboxed too. Values again.
+    // Why reference comparison still passes most tests: Integer.valueOf caches objects in -128..127.
+    // For 5 or -100 both pushes store the very same cached object, the addresses match, and `==`
+    // accidentally yields true. For 512 or -1024 there is no cache - stack.push(val) and
+    // prefixMin.push(val) create two distinct objects holding equal values. `==` yields false,
+    // prefixMin is never popped, and getMin returns a stale minimum.
+    // The test [512, -1024, -1024, 512] targets exactly this hole - every value is outside the cache.
+    // On the `>=` variant: the logic is correct because prefixMin.peek() is always <= the top of
+    // stack, it can never be strictly greater, so `>=` fires exactly on equality. But it reads worse -
+    // .intValue() or a local int states the intent plainly.
     public void pop() {
         int top = stack.pop();
         if (top == prefixMin.peek()) {
