@@ -41,32 +41,20 @@ public class P0150_EvaluateReversePolishNotation {
         int top = -1;
         for (String op : tokens) {
             switch (op) {
-                case "+":
-                    int first = stack[top--];
-                    int second = stack[top--];
-                    stack[++top] = first + second;
-                    break;
-                case "-":
-                    first = stack[top--];
-                    second = stack[top--];
-                    stack[++top] = second - first;
-                    break;
-                case "*":
-                    first = stack[top--];
-                    second = stack[top--];
-                    stack[++top] = first * second;
-                    break;
-                case "/":
-                    first = stack[top--];
-                    second = stack[top--];
-                    stack[++top] = second / first;
-                    break;
-                default:
-                    stack[++top] = Integer.parseInt(op);
-                    break;
+                case "+", "-", "*", "/" -> {
+                    int b = stack[top--];
+                    int a = stack[top--];
+                    stack[++top] = switch (op) {
+                        case "+" -> a + b;
+                        case "-" -> a - b;
+                        case "*" -> a * b;
+                        default -> a / b;
+                    };
+                }
+                default -> stack[++top] = Integer.parseInt(op);
             }
         }
 
-        return stack[top];
+        return stack[0];
     }
 }
