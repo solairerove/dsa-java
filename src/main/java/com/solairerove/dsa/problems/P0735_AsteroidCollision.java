@@ -1,54 +1,61 @@
 package com.solairerove.dsa.problems;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Stack;
+import java.util.Deque;
 
 public class P0735_AsteroidCollision {
 
     // time O(n), space O(n)
     public static int[] asteroidCollision(int[] asteroids) {
-        Stack<Integer> stack = new Stack<>();
+        Deque<Integer> dq = new ArrayDeque<>();
         for (int a : asteroids) {
-            while (!stack.isEmpty() && a < 0 && stack.peek() > 0) {
-                int diff = a + stack.peek();
-                if (diff < 0) {
-                    stack.pop();
-                } else if (diff > 0) {
+            while (!dq.isEmpty() && dq.peek() > 0 && a < 0) {
+                int diff = dq.peek() + a;
+                if (diff == 0) {
+                    dq.pop();
                     a = 0;
+                } else if (diff < 0) {
+                    dq.pop();
                 } else {
                     a = 0;
-                    stack.pop();
                 }
             }
+
             if (a != 0) {
-                stack.add(a);
+                dq.push(a);
             }
         }
 
-        return stack.stream().mapToInt(i -> i).toArray();
+        int[] res = new int[dq.size()];
+        for (int i = res.length - 1; i >= 0; i--) {
+            res[i] = dq.pop();
+        }
+
+        return res;
     }
 
     // time O(n), space O(1)
     public static int[] asteroidCollisionInPlace(int[] asteroids) {
-        int i = -1;
+        int top = -1;
         for (int a : asteroids) {
-            while (i >= 0 && asteroids[i] > 0 && a < 0) {
-                if (asteroids[i] > Math.abs(a)) {
+            while (top >= 0 && asteroids[top] > 0 && a < 0) {
+                int diff = asteroids[top] + a;
+                if (diff == 0) {
+                    top--;
                     a = 0;
-                    break;
-                } else if (asteroids[i] == Math.abs(a)) {
-                    i--;
-                    a = 0;
-                    break;
+                } else if (diff < 0) {
+                    top--;
                 } else {
-                    i--;
+                    a = 0;
                 }
             }
+
             if (a != 0) {
-                asteroids[++i] = a;
+                asteroids[++top] = a;
             }
         }
 
-        return Arrays.copyOfRange(asteroids, 0, i + 1);
+        return Arrays.copyOfRange(asteroids, 0, top + 1);
     }
 }
