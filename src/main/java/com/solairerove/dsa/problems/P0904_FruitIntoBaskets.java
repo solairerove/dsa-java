@@ -14,7 +14,7 @@ public class P0904_FruitIntoBaskets {
 
             if (map.size() > 2) {
                 int left = fruits[l++];
-                map.merge(left, -1, (a, b) -> a + b == 0 ? null : a + b);
+                map.merge(left, -1, (a, b) -> a == 1 ? null : a + b);
             }
         }
 
