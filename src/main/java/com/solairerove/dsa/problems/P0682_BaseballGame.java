@@ -1,6 +1,7 @@
 package com.solairerove.dsa.problems;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 
 public class P0682_BaseballGame {
@@ -40,10 +41,16 @@ public class P0682_BaseballGame {
         int top = -1;
         for (String op : operations) {
             switch (op) {
-                case "+": stack[top + 1] = stack[top] + stack[top - 1]; top++; break;
-                case "D": stack[top + 1] = 2 * stack[top]; top++; break;
-                case "C": top--; break;
-                default: stack[++top] = Integer.parseInt(op);
+                case "+" -> {
+                    int sum = stack[top] + stack[top - 1];
+                    stack[++top] = sum;
+                }
+                case "D" -> {
+                    int doubled = stack[top] * 2;
+                    stack[++top] = doubled;
+                }
+                case "C" -> top--;
+                default -> stack[++top] = Integer.parseInt(op);
             }
         }
 
