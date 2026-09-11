@@ -1,21 +1,16 @@
 package com.solairerove.dsa.problems;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class P0159_LongestSubstringWithAtMostTwoDistinctCharacters {
 
     // time O(n), space O(1)
     public static int lengthOfLongestSubstringTwoDistinct(String s) {
-        int n = s.length();
-        Map<Character, Integer> cnt = new HashMap<>();
-        int l = 0;
+        int[] cnt = new int[128];
+        int n = s.length(), l = 0, distinct = 0;
         for (int r = 0; r < n; r++) {
-            cnt.merge(s.charAt(r), 1, Integer::sum);
+            if (cnt[s.charAt(r)]++ == 0) distinct++;
 
-            if (cnt.size() > 2) {
-                char left = s.charAt(l++);
-                cnt.merge(left, -1, (a, b) -> a == 1 ? null : a + b);
+            if (distinct > 2) {
+                if (--cnt[s.charAt(l++)] == 0) distinct--;
             }
         }
 
