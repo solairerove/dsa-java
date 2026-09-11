@@ -7,25 +7,18 @@ public class P0904_FruitIntoBaskets {
 
     // time O(n), space O(1)
     public static int totalFruit(int[] fruits) {
-        int n = fruits.length;
-        Map<Integer, Integer> cnt = new HashMap<>();
-        int l = 0, r = 0;
-        while (r < n) {
-            int fruit = fruits[r];
-            cnt.merge(fruit, 1, Integer::sum);
+        Map<Integer, Integer> map = new HashMap<>();
+        int l = 0;
+        for (int fruit : fruits) {
+            map.merge(fruit, 1, Integer::sum);
 
-            if (cnt.size() > 2) {
-                int left = fruits[l];
-                cnt.put(left, cnt.get(left) - 1);
-                if (cnt.get(left) == 0) {
-                    cnt.remove(left);
-                }
-                l++;
+            if (map.size() > 2) {
+                int left = fruits[l++];
+                map.merge(left, -1, (a, b) -> a + b == 0 ? null : a + b);
             }
-            r++;
         }
 
-        return n - l;
+        return fruits.length - l;
     }
 
     // time O(n), space O(1)
