@@ -1,14 +1,14 @@
 package com.solairerove.dsa.problems;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.Stack;
 
 public class P0853_CarFleet {
 
     // time O(n * log n), space O(n)
     public static int carFleet(int target, int[] position, int[] speed) {
-        Stack<Double> dq = new Stack<>();
-
         int n = position.length;
         int[][] pair = new int[n][2];
         for (int i = 0; i < n; i++) {
@@ -17,10 +17,11 @@ public class P0853_CarFleet {
         }
         Arrays.sort(pair, (a, b) -> Integer.compare(b[0], a[0]));
 
+        Deque<Double> dq = new ArrayDeque<>();
         for (int[] p : pair) {
-            dq.push((double) (target - p[0]) / p[1]);
-            if (dq.size() >= 2 && dq.peek() <= dq.get(dq.size() - 2)) {
-                dq.pop();
+            double time = (double) (target - p[0]) / p[1];
+            if (dq.isEmpty() || time > dq.peek()) {
+                dq.push(time);
             }
         }
 
