@@ -3,7 +3,7 @@ package com.solairerove.dsa.problems;
 import org.junit.jupiter.api.Test;
 
 import static com.solairerove.dsa.problems.P0394_DecodeString.decodeString;
-import static com.solairerove.dsa.problems.P0394_DecodeString.decodeStringTwoStacks;
+import static com.solairerove.dsa.problems.P0394_DecodeString.decodeStringDeque;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SuppressWarnings("NewClassNamingConvention")
@@ -85,77 +85,77 @@ class P0394_DecodeStringTest {
     }
 
     @Test
-    void twoStacksLeetcodeExampleOne() {
-        assertEquals("aaabcbc", decodeStringTwoStacks("3[a]2[bc]"));
+    void dequeLeetcodeExampleOne() {
+        assertEquals("aaabcbc", decodeStringDeque("3[a]2[bc]"));
     }
 
     @Test
-    void twoStacksLeetcodeExampleTwo() {
-        assertEquals("accaccacc", decodeStringTwoStacks("3[a2[c]]"));
+    void dequeLeetcodeExampleTwo() {
+        assertEquals("accaccacc", decodeStringDeque("3[a2[c]]"));
     }
 
     @Test
-    void twoStacksLeetcodeExampleThree() {
-        assertEquals("abcabccdcdcdef", decodeStringTwoStacks("2[abc]3[cd]ef"));
+    void dequeLeetcodeExampleThree() {
+        assertEquals("abcabccdcdcdef", decodeStringDeque("2[abc]3[cd]ef"));
     }
 
     @Test
-    void twoStacksNoEncoding() {
-        assertEquals("abc", decodeStringTwoStacks("abc"));
+    void dequeNoEncoding() {
+        assertEquals("abc", decodeStringDeque("abc"));
     }
 
     @Test
-    void twoStacksEmptyInput() {
-        assertEquals("", decodeStringTwoStacks(""));
+    void dequeEmptyInput() {
+        assertEquals("", decodeStringDeque(""));
     }
 
     @Test
-    void twoStacksSingleRepeat() {
-        assertEquals("x", decodeStringTwoStacks("1[x]"));
+    void dequeSingleRepeat() {
+        assertEquals("x", decodeStringDeque("1[x]"));
     }
 
     @Test
-    void twoStacksMultiDigitCount() {
-        assertEquals("aaaaaaaaaa", decodeStringTwoStacks("10[a]"));
+    void dequeMultiDigitCount() {
+        assertEquals("aaaaaaaaaa", decodeStringDeque("10[a]"));
     }
 
     @Test
-    void twoStacksTripleNesting() {
-        assertEquals("aaaaaaaa", decodeStringTwoStacks("2[2[2[a]]]"));
+    void dequeTripleNesting() {
+        assertEquals("aaaaaaaa", decodeStringDeque("2[2[2[a]]]"));
     }
 
     @Test
-    void twoStacksLiteralBeforeAndAfter() {
-        assertEquals("abbc", decodeStringTwoStacks("a2[b]c"));
+    void dequeLiteralBeforeAndAfter() {
+        assertEquals("abbc", decodeStringDeque("a2[b]c"));
     }
 
     @Test
-    void twoStacksTrailingLiteral() {
-        assertEquals("aaab", decodeStringTwoStacks("3[a]b"));
+    void dequeTrailingLiteral() {
+        assertEquals("aaab", decodeStringDeque("3[a]b"));
     }
 
     @Test
-    void twoStacksNestedAfterLiteralInside() {
-        assertEquals("abcccabccc", decodeStringTwoStacks("2[ab3[c]]"));
+    void dequeNestedAfterLiteralInside() {
+        assertEquals("abcccabccc", decodeStringDeque("2[ab3[c]]"));
     }
 
     @Test
-    void twoStacksNestedWithMultiDigitCounts() {
-        assertEquals("ab".repeat(12), decodeStringTwoStacks("3[4[ab]]"));
+    void dequeNestedWithMultiDigitCounts() {
+        assertEquals("ab".repeat(12), decodeStringDeque("3[4[ab]]"));
     }
 
     @Test
-    void twoStacksLargeCount() {
-        assertEquals("leetcode".repeat(100), decodeStringTwoStacks("100[leetcode]"));
+    void dequeLargeCount() {
+        assertEquals("leetcode".repeat(100), decodeStringDeque("100[leetcode]"));
     }
 
     @Test
-    void twoStacksTwoNestedSiblings() {
-        assertEquals("xyyxyyzz", decodeStringTwoStacks("2[x2[y]]2[z]"));
+    void dequeTwoNestedSiblings() {
+        assertEquals("xyyxyyzz", decodeStringDeque("2[x2[y]]2[z]"));
     }
 
     @Test
-    void twoStacksDeepNestingWithSuffix() {
-        assertEquals("accaccaccb", decodeStringTwoStacks("3[a2[c]]b"));
+    void dequeDeepNestingWithSuffix() {
+        assertEquals("accaccaccb", decodeStringDeque("3[a2[c]]b"));
     }
 }

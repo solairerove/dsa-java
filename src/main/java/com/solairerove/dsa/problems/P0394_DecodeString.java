@@ -1,5 +1,7 @@
 package com.solairerove.dsa.problems;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 public class P0394_DecodeString {
@@ -36,30 +38,33 @@ public class P0394_DecodeString {
         return res.toString();
     }
 
+    private record Frame(StringBuilder prefix, int count) {
+    }
+
     // time O(n * k), space O(n)
-    public static String decodeStringTwoStacks(String s) {
-        Stack<String> stringStack = new Stack<>();
-        Stack<Integer> countStack = new Stack<>();
-        StringBuilder curr = new StringBuilder();
-        int k = 0;
-        for (char ch : s.toCharArray()) {
-            if (Character.isDigit(ch)) {
-                k = k * 10 + (ch - '0');
+    public static String decodeStringDeque(String s) {
+        Deque<Frame> dq = new ArrayDeque<>();
+        StringBuilder cur = new StringBuilder();
+        int count = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch >= '0' && ch <= '9') {
+                count = count * 10 + (ch - '0');
             } else if (ch == '[') {
-                stringStack.push(curr.toString());
-                countStack.push(k);
-                curr = new StringBuilder();
-                k = 0;
+                dq.push(new Frame(cur, count));
+                cur = new StringBuilder();
+                count = 0;
             } else if (ch == ']') {
-                String temp = curr.toString();
-                curr = new StringBuilder(stringStack.pop());
-                int count = countStack.pop();
-                curr.repeat(temp, Math.max(0, count));
+                Frame frame = dq.pop();
+                StringBuilder prefix = frame.prefix();
+                prefix.repeat(String.valueOf(cur), Math.max(0, frame.count()));
+                cur = prefix;
             } else {
-                curr.append(ch);
+                cur.append(ch);
             }
         }
 
-        return curr.toString();
+        return cur.toString();
     }
 }
