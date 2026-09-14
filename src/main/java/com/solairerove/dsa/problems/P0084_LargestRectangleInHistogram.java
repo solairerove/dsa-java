@@ -1,0 +1,23 @@
+package com.solairerove.dsa.problems;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+public class P0084_LargestRectangleInHistogram {
+
+    // time O(n), space O(n)
+    public static int largestRectangleArea(int[] heights) {
+        int n = heights.length, maxArea = 0;
+        Deque<Integer> dq = new ArrayDeque<>();
+        for (int i = 0; i <= n; i++) {
+            while (!dq.isEmpty() && (i == n || heights[dq.peek()] >= heights[i])) {
+                int h = heights[dq.pop()];
+                int w = dq.isEmpty() ? i : i - dq.peek() - 1;
+                maxArea = Math.max(maxArea, h * w);
+            }
+            dq.push(i);
+        }
+
+        return maxArea;
+    }
+}
