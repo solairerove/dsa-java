@@ -21,6 +21,9 @@ public class P0704_BinarySearch {
     }
 
     // time O(log n), space O(1)
+    // first index where a value greater than the target appears
+    // after loop l is the upper bound: first index where nums[l] > target.
+    // So the potential location of the target is l - 1.
     public static int searchUpperBound(int[] nums, int target) {
         int l = 0, r = nums.length;
         while (l < r) {
@@ -34,6 +37,28 @@ public class P0704_BinarySearch {
 
         if (l > 0 && nums[l - 1] == target) {
             return l - 1;
+        } else {
+            return -1;
+        }
+    }
+
+    // time O(log n), space O(1)
+    // first index where a value greater than or equal to the target appears
+    // after loop l is the lower bound: first index where nums[l] >= target.
+    // So the potential location of the target is l.
+    public static int searchLowerBound(int[] nums, int target) {
+        int l = 0, r = nums.length;
+        while (l < r) {
+            int mid = (l + r) >>> 1;
+            if (nums[mid] >= target) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+
+        if (l < nums.length && nums[l] == target) {
+            return l;
         } else {
             return -1;
         }

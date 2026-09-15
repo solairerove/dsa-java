@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import static com.solairerove.dsa.problems.P0704_BinarySearch.search;
+import static com.solairerove.dsa.problems.P0704_BinarySearch.searchLowerBound;
 import static com.solairerove.dsa.problems.P0704_BinarySearch.searchUpperBound;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -179,6 +180,91 @@ class P0704_BinarySearchTest {
 
             int expected = Arrays.binarySearch(nums, target);
             assertEquals(expected < 0 ? -1 : expected, searchUpperBound(nums, target));
+        }
+    }
+
+    @Test
+    void lowerBoundLeetcodeExampleOne() {
+        assertEquals(4, searchLowerBound(new int[]{-1, 0, 3, 5, 9, 12}, 9));
+    }
+
+    @Test
+    void lowerBoundLeetcodeExampleTwo() {
+        assertEquals(-1, searchLowerBound(new int[]{-1, 0, 3, 5, 9, 12}, 2));
+    }
+
+    @Test
+    void lowerBoundEmptyInput() {
+        assertEquals(-1, searchLowerBound(new int[]{}, 1));
+    }
+
+    @Test
+    void lowerBoundSingleElementFound() {
+        assertEquals(0, searchLowerBound(new int[]{5}, 5));
+    }
+
+    @Test
+    void lowerBoundSingleElementMissing() {
+        assertEquals(-1, searchLowerBound(new int[]{5}, 3));
+    }
+
+    @Test
+    void lowerBoundFindsFirstElement() {
+        assertEquals(0, searchLowerBound(new int[]{1, 2, 3, 4, 5}, 1));
+    }
+
+    @Test
+    void lowerBoundFindsLastElement() {
+        assertEquals(4, searchLowerBound(new int[]{1, 2, 3, 4, 5}, 5));
+    }
+
+    @Test
+    void lowerBoundTargetBelowRange() {
+        assertEquals(-1, searchLowerBound(new int[]{1, 2, 3, 4, 5}, 0));
+    }
+
+    @Test
+    void lowerBoundTargetAboveRange() {
+        assertEquals(-1, searchLowerBound(new int[]{1, 2, 3, 4, 5}, 6));
+    }
+
+    @Test
+    void lowerBoundEvenLengthArray() {
+        assertEquals(2, searchLowerBound(new int[]{2, 4, 6, 8}, 6));
+    }
+
+    @Test
+    void lowerBoundNegativeValues() {
+        assertEquals(1, searchLowerBound(new int[]{-10, -5, -1}, -5));
+    }
+
+    @Test
+    void lowerBoundExtremeBoundsNoOverflow() {
+        assertEquals(1, searchLowerBound(new int[]{Integer.MIN_VALUE, 0, Integer.MAX_VALUE}, 0));
+        assertEquals(2, searchLowerBound(new int[]{Integer.MIN_VALUE, 0, Integer.MAX_VALUE}, Integer.MAX_VALUE));
+    }
+
+    @Test
+    void lowerBoundLargeArrayEveryIndexFound() {
+        int[] nums = new int[10_000];
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = i * 2;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            assertEquals(i, searchLowerBound(nums, nums[i]));
+        }
+    }
+
+    @Test
+    void lowerBoundMatchesArraysBinarySearchOnRandomInputs() {
+        Random random = new Random(42);
+        for (int t = 0; t < 500; t++) {
+            int[] nums = random.ints(random.nextInt(20), -30, 30).distinct().sorted().toArray();
+            int target = random.nextInt(-35, 35);
+
+            int expected = Arrays.binarySearch(nums, target);
+            assertEquals(expected < 0 ? -1 : expected, searchLowerBound(nums, target));
         }
     }
 }
