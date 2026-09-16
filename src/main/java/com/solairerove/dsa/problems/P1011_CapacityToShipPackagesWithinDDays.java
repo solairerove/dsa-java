@@ -4,38 +4,36 @@ public class P1011_CapacityToShipPackagesWithinDDays {
 
     // time O(n * log(sum(weights))), space O(1)
     public static int shipWithinDays(int[] weights, int days) {
-        int n = weights.length;
-        int maxWeight = weights[0];
-        int weightsSum = weights[0];
-        for (int i = 1; i < n; i++) {
-            int currWeight = weights[i];
-            weightsSum += currWeight;
-            if (currWeight > maxWeight) {
-                maxWeight = currWeight;
-            }
+        int maxWeight = 0, weightsSum = 0;
+        for (int weight : weights) {
+            weightsSum += weight;
+            maxWeight = Math.max(maxWeight, weight);
         }
 
         int l = maxWeight, r = weightsSum;
         while (l < r) {
-            int leastWeightCapacity = l + (r - l) / 2;
-            int pickDays = 1;
-            int currWeight = 0;
-            for (int weight : weights) {
-                if (currWeight + weight > leastWeightCapacity) {
-                    currWeight = weight;
-                    pickDays++;
-                } else {
-                    currWeight += weight;
-                }
-            }
-
-            if (pickDays <= days) {
-                r = leastWeightCapacity;
+            int mid = l + (r - l) / 2;
+            if (daysNeed(weights, mid) <= days) {
+                r = mid;
             } else {
-                l = leastWeightCapacity + 1;
+                l = mid + 1;
             }
         }
 
         return l;
+    }
+
+    private static int daysNeed(int[] weights, int capacity) {
+        int days = 1, load = 0;
+        for (int weight : weights) {
+            if (load + weight > capacity) {
+                days++;
+                load = weight;
+            } else {
+                load += weight;
+            }
+        }
+
+        return days;
     }
 }
