@@ -32,4 +32,35 @@ public class P0875_KokoEatingBananas {
 
         return r;
     }
+
+    // time O(n + n * log(range)), space O(1)
+    // same binary search, but over a narrowed range of speeds:
+    // left is ceil(total / h), the rate needed with no rounding waste at all,
+    // right is a rate already proven to finish in h hours
+    public static int minEatingSpeedTightBounds(int[] piles, int h) {
+        int n = piles.length;
+        long total = 0;
+        for (int p : piles) {
+            total += p;
+        }
+
+        int left = (int) ((total - 1) / h) + 1; // minimum number of bananas she eats per hour.
+        int right = (int) ((total - n) / (h - n + 1)) + 1; // assuming she eats all the bananas from the biggest pile in 1 hour and then waits takes her time with the rest.
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            int time = 0;
+            for (int p : piles) { // calculating the total time it takes to eat the rest of the bananas at the current rate without using pointers.
+                time += (p - 1) / mid + 1;
+            }
+
+            if (time > h) { // if the time currently is greater than h we should increase the min time.
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        return left; // since we need the minimum integer where she can eat all the bananas within the time.
+    }
 }
