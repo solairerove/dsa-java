@@ -6,6 +6,7 @@ import java.util.Random;
 
 import static com.solairerove.dsa.problems.P0069_SqrtX.mySqrt;
 import static com.solairerove.dsa.problems.P0069_SqrtX.mySqrtNewton;
+import static com.solairerove.dsa.problems.P0069_SqrtX.mySqrtUpperBound;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SuppressWarnings("NewClassNamingConvention")
@@ -144,6 +145,74 @@ class P0069_SqrtXTest {
         for (int t = 0; t < 10_000; t++) {
             int x = random.nextInt(0, Integer.MAX_VALUE);
             assertEquals((int) Math.sqrt(x), mySqrtNewton(x));
+        }
+    }
+
+    @Test
+    void upperBoundLeetcodeExampleOne() {
+        assertEquals(2, mySqrtUpperBound(4));
+    }
+
+    @Test
+    void upperBoundLeetcodeExampleTwo() {
+        assertEquals(2, mySqrtUpperBound(8));
+    }
+
+    @Test
+    void upperBoundZero() {
+        assertEquals(0, mySqrtUpperBound(0));
+    }
+
+    @Test
+    void upperBoundOne() {
+        assertEquals(1, mySqrtUpperBound(1));
+    }
+
+    @Test
+    void upperBoundSmallNonSquares() {
+        assertEquals(1, mySqrtUpperBound(2));
+        assertEquals(1, mySqrtUpperBound(3));
+        assertEquals(2, mySqrtUpperBound(5));
+        assertEquals(3, mySqrtUpperBound(15));
+    }
+
+    @Test
+    void upperBoundPerfectSquares() {
+        assertEquals(3, mySqrtUpperBound(9));
+        assertEquals(10, mySqrtUpperBound(100));
+        assertEquals(1_000, mySqrtUpperBound(1_000_000));
+    }
+
+    @Test
+    void upperBoundJustBelowPerfectSquare() {
+        assertEquals(9, mySqrtUpperBound(99));
+        assertEquals(999, mySqrtUpperBound(999_999));
+    }
+
+    @Test
+    void upperBoundMaxIntNoOverflow() {
+        assertEquals(46_340, mySqrtUpperBound(Integer.MAX_VALUE));
+    }
+
+    @Test
+    void upperBoundLargestPerfectSquareInIntRange() {
+        assertEquals(46_340, mySqrtUpperBound(46_340 * 46_340));
+        assertEquals(46_339, mySqrtUpperBound(46_340 * 46_340 - 1));
+    }
+
+    @Test
+    void upperBoundEveryValueUpTo100k() {
+        for (int x = 0; x <= 100_000; x++) {
+            assertEquals((int) Math.sqrt(x), mySqrtUpperBound(x));
+        }
+    }
+
+    @Test
+    void upperBoundMatchesMathSqrtOnRandomInputs() {
+        Random random = new Random(42);
+        for (int t = 0; t < 10_000; t++) {
+            int x = random.nextInt(0, Integer.MAX_VALUE);
+            assertEquals((int) Math.sqrt(x), mySqrtUpperBound(x));
         }
     }
 }

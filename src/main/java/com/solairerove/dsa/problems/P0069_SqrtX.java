@@ -31,4 +31,19 @@ public class P0069_SqrtX {
 
         return (int) r;
     }
+
+    // time O(log x), space O(1)
+    public static int mySqrtUpperBound(int x) {
+        int l = 0, r = x;
+        while (l < r) {
+            int mid = r - (r - l) / 2;
+            if ((long) mid * mid <= x) {
+                l = mid;
+            } else {
+                r = mid - 1;
+            }
+        }
+
+        return l;
+    }
 }
