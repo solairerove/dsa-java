@@ -1,22 +1,23 @@
 package com.solairerove.dsa.problems;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class P0071_SimplifyPath {
 
     // time O(n), space O(n)
     public static String simplifyPath(String path) {
-        Stack<String> stack = new Stack<>();
+        Deque<String> dq = new ArrayDeque<>();
         for (String p : path.split("/")) {
             if (p.equals("..")) {
-                if (!stack.isEmpty()) {
-                    stack.pop();
+                if (!dq.isEmpty()) {
+                    dq.pollLast();
                 }
             } else if (!p.isEmpty() && !p.equals(".")) {
-                stack.push(p);
+                dq.addLast(p);
             }
         }
 
-        return "/" + String.join("/", stack);
+        return "/" + String.join("/", dq);
     }
 }
