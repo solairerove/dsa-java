@@ -11,7 +11,7 @@ public class P0394_DecodeString {
         for (char ch : s.toCharArray()) {
             if (ch == ']') {
                 Deque<String> inner = new ArrayDeque<>();
-                while (!dq.isEmpty() && Character.isLetter(dq.peekLast().charAt(0))) {
+                while (!dq.isEmpty() && !dq.peekLast().equals("[") ) {
                     inner.offerFirst(dq.pollLast());
                 }
                 dq.pollLast(); // [
