@@ -1,32 +1,33 @@
 package com.solairerove.dsa.problems;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class P0394_DecodeString {
 
     // time O(n * k), space O(n)
     public static String decodeString(String s) {
-        Stack<String> stack = new Stack<>();
-        for (Character ch : s.toCharArray()) {
+        Deque<String> dq = new ArrayDeque<>();
+        for (char ch : s.toCharArray()) {
             if (ch == ']') {
                 StringBuilder inner = new StringBuilder();
-                while (!stack.isEmpty() && Character.isLetter(stack.peek().toCharArray()[0])) {
-                    inner.insert(0, stack.pop());
+                while (!dq.isEmpty() && Character.isLetter(dq.peekLast().charAt(0))) {
+                    inner.insert(0, dq.pollLast());
                 }
-                stack.pop();
+                dq.pollLast(); // [
 
                 StringBuilder count = new StringBuilder();
-                while (!stack.isEmpty() && Character.isDigit(stack.peek().toCharArray()[0])) {
-                    count.insert(0, stack.pop());
+                while (!dq.isEmpty() && Character.isDigit(dq.peekLast().charAt(0))) {
+                    count.insert(0, dq.pollLast());
                 }
 
                 String substring = inner.toString().repeat(Integer.parseInt(count.toString()));
-                stack.push(substring);
+                dq.offerLast(substring);
             } else {
-                stack.push(String.valueOf(ch));
+                dq.offerLast(String.valueOf(ch));
             }
         }
 
-        return String.join("", stack);
+        return String.join("", dq);
     }
 }
