@@ -10,9 +10,9 @@ public class P0394_DecodeString {
         Deque<String> dq = new ArrayDeque<>();
         for (char ch : s.toCharArray()) {
             if (ch == ']') {
-                StringBuilder inner = new StringBuilder();
+                Deque<String> inner = new ArrayDeque<>();
                 while (!dq.isEmpty() && Character.isLetter(dq.peekLast().charAt(0))) {
-                    inner.insert(0, dq.pollLast());
+                    inner.offerFirst(dq.pollLast());
                 }
                 dq.pollLast(); // [
 
@@ -21,7 +21,7 @@ public class P0394_DecodeString {
                     count.insert(0, dq.pollLast());
                 }
 
-                String substring = inner.toString().repeat(Integer.parseInt(count.toString()));
+                String substring = String.join("", inner).repeat(Integer.parseInt(count.toString()));
                 dq.offerLast(substring);
             } else {
                 dq.offerLast(String.valueOf(ch));
