@@ -40,4 +40,32 @@ public class P0033_SearchInRotatedSortedArray {
 
         return l;
     }
+
+    // time O(log n), space O(1)
+    public static int searchOnePass(int[] nums, int target) {
+        int l = 0, r = nums.length - 1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            int guess = nums[mid];
+            if (guess == target) {
+                return mid;
+            }
+
+            if (nums[l] <= guess) {
+                if (target > nums[mid] || target < nums[l]) {
+                    l = mid + 1;
+                } else {
+                    r = mid - 1;
+                }
+            } else {
+                if (target < nums[mid] || target > nums[r]) {
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
+            }
+        }
+
+        return -1;
+    }
 }
