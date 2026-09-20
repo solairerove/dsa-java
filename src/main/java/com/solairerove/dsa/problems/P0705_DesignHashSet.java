@@ -2,62 +2,58 @@ package com.solairerove.dsa.problems;
 
 public class P0705_DesignHashSet {
 
-    private static class ListNode {
+    private static class Node {
         int key;
-        ListNode next;
+        Node next;
 
-        ListNode(int key) {
+        Node() {
+        }
+
+        Node(int key) {
             this.key = key;
         }
     }
 
-    private final ListNode[] set;
+    private final Node[] set;
 
     public P0705_DesignHashSet() {
-        set = new ListNode[10000];
+        set = new Node[1 << 10];
         for (int i = 0; i < set.length; i++) {
-            set[i] = new ListNode(0);
+            set[i] = new Node();
         }
     }
 
     private int hash(int key) {
-        return key % set.length;
+        return key & (set.length - 1);
+    }
+
+    private Node findPrev(int key) {
+        Node curr = set[hash(key)];
+        while (curr.next != null && curr.next.key != key) {
+            curr = curr.next;
+        }
+
+        return curr;
     }
 
     // time O(n / k), space O(1)
     public void add(int key) {
-        ListNode curr = set[hash(key)];
-        while (curr.next != null) {
-            if (curr.next.key == key) {
-                return;
-            }
-            curr = curr.next;
+        Node prev = findPrev(key);
+        if (prev.next == null) {
+            prev.next = new Node(key);
         }
-        curr.next = new ListNode(key);
     }
 
     // time O(n / k), space O(1)
     public void remove(int key) {
-        ListNode curr = set[hash(key)];
-        while (curr.next != null) {
-            if (curr.next.key == key) {
-                curr.next = curr.next.next;
-                return;
-            }
-            curr = curr.next;
+        Node prev = findPrev(key);
+        if (prev.next != null) {
+            prev.next = prev.next.next;
         }
     }
 
     // time O(n / k), space O(1)
     public boolean contains(int key) {
-        ListNode curr = set[hash(key)];
-        while (curr.next != null) {
-            if (curr.next.key == key) {
-                return true;
-            }
-            curr = curr.next;
-        }
-
-        return false;
+        return findPrev(key).next != null;
     }
 }
