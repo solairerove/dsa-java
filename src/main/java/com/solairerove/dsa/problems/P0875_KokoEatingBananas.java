@@ -17,20 +17,23 @@ public class P0875_KokoEatingBananas {
         while (l < r) {
             int mid = l + (r - l) / 2;
             // linear search? check time to eat all piles with that eating rate
-
-            int hours = 0;
-            for (int pile : piles) {
-                hours = (int) (hours + Math.ceil((double) pile / mid));
-            }
-
-            if (hours <= h) {
+            if (hoursNeeded(piles, mid) <= h) {
                 r = mid;
             } else {
                 l = mid + 1; // if hour > h it means that we need to increase eating rate
             }
         }
 
-        return r;
+        return l;
+    }
+
+    private static int hoursNeeded(int[] piles, int speed) {
+        int hours = 0;
+        for (int pile : piles) {
+            hours += Math.ceilDiv(pile, speed);
+        }
+
+        return hours;
     }
 
     // time O(n + n * log(range)), space O(1)
