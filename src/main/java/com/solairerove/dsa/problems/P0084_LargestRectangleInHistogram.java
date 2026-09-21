@@ -7,20 +7,23 @@ public class P0084_LargestRectangleInHistogram {
 
     // time O(n), space O(n)
     public static int largestRectangleArea(int[] heights) {
-        int n = heights.length;
         Deque<Integer> dq = new ArrayDeque<>();
         dq.push(-1);
-        int res = 0;
+
+        int n = heights.length;
+        int maxArea = 0;
         for (int i = 0; i <= n; i++) {
-            int h = i == n ? 0 : heights[i];
-            while (dq.peek() != -1 && heights[dq.peek()] >= h) {
+            int currentHeight = i == n ? 0 : heights[i];
+            while (dq.peek() != -1 && heights[dq.peek()] >= currentHeight) {
                 int height = heights[dq.pop()];
-                res = Math.max(res, height * (i - dq.peek() - 1));
+                int width = i - dq.peek() - 1;
+                maxArea = Math.max(maxArea, height * width);
             }
+
             dq.push(i);
         }
 
-        return res;
+        return maxArea;
     }
 
     // time O(n), space O(n)
