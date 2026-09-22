@@ -80,7 +80,7 @@ class P1004_MaxConsecutiveOnesIIITest {
         assertEquals(4, longestOnes(new int[]{1, 1, 1, 0, 0, 0, 1}, 1));
     }
 
-@Test
+    @Test
     void countingOnesLeetcodeExampleOne() {
         assertEquals(6, longestOnesCountingOnes(new int[]{1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0}, 2));
     }
