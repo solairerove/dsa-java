@@ -25,24 +25,27 @@ public class P0981_TimeBasedKeyValueStore {
     }
 
     // time O(log n), space O(1)
-    // the loop pushes l past every timestamp <= the target, so on exit r == l - 1: the last index
-    // holding a timestamp <= the target, or -1 when even the earliest set came later.
+    // half-open [l, r) upper bound, same shape as P0704_BinarySearch.searchUpperBound: on exit l is
+    // the first index holding a timestamp > the target, so the answer sits one step left. r starts
+    // at size() because the bound may land past the last element, and the step is r = mid, not
+    // mid - 1, because mid itself is still a candidate for that bound. l == 0 means even the
+    // earliest set came later.
     public String get(String key, int timestamp) {
         List<Pair> pairs = storage.get(key);
         if (pairs == null) {
             return "";
         }
 
-        int l = 0, r = pairs.size() - 1;
-        while (l <= r) {
-            int mid = l + (r - l) / 2;
-            if (pairs.get(mid).timestamp() <= timestamp) {
-                l = mid + 1;
+        int l = 0, r = pairs.size();
+        while (l < r) {
+            int mid = (l + r) >>> 1;
+            if (pairs.get(mid).timestamp() > timestamp) {
+                r = mid;
             } else {
-                r = mid - 1;
+                l = mid + 1;
             }
         }
 
-        return r >= 0 ? pairs.get(r).value() : "";
+        return l > 0 ? pairs.get(l - 1).value() : "";
     }
 }
