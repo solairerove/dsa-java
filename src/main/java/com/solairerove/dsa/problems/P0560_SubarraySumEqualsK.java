@@ -7,15 +7,14 @@ public class P0560_SubarraySumEqualsK {
 
     // time O(n), space O(n)
     public static int subarraySum(int[] nums, int k) {
-        Map<Integer, Integer> freq = new HashMap<>();
+        Map<Integer, Integer> freq = new HashMap<>(nums.length);
         freq.put(0, 1);
 
         int res = 0, ps = 0;
         for (int num : nums) {
             ps += num;
-            int guess = ps - k;
-            res += freq.getOrDefault(guess, 0);
-            freq.put(ps, freq.getOrDefault(ps, 0) + 1);
+            res += freq.getOrDefault(ps - k, 0);
+            freq.merge(ps, 1, Integer::sum);
         }
 
         return res;
