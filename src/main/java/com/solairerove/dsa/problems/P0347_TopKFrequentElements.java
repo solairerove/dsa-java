@@ -1,5 +1,7 @@
 package com.solairerove.dsa.problems;
 
+import static com.solairerove.dsa.common.ArrayUtils.swap;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -86,12 +88,6 @@ public class P0347_TopKFrequentElements {
         }
 
         return new int[]{l, r};
-    }
-
-    private static void swap(int[] arr, int i, int j) {
-        int tmp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = tmp;
     }
 
     // time O(d * log(k)), space O(d + k), d = distinct values in nums

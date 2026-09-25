@@ -1,5 +1,7 @@
 package com.solairerove.dsa.problems;
 
+import static com.solairerove.dsa.common.ArrayUtils.swap;
+
 public class P0075_SortColors {
 
     // time O(n), space O(1)
@@ -14,11 +16,5 @@ public class P0075_SortColors {
                 i++;
             }
         }
-    }
-
-    private static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
     }
 }

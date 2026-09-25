@@ -1,5 +1,7 @@
 package com.solairerove.dsa.problems;
 
+import static com.solairerove.dsa.common.ArrayUtils.swap;
+
 public class P0189_RotateArray {
 
     // time O(n), space O(1)
@@ -16,11 +18,5 @@ public class P0189_RotateArray {
         while (l < r) {
             swap(nums, l++, r--);
         }
-    }
-
-    private static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
     }
 }
