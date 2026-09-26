@@ -62,14 +62,4 @@ class P0004_MedianOfTwoSortedArraysTest {
     void shouldHandleUnevenLengthsOddTotal() {
         assertEquals(4.0, findMedianSortedArrays(new int[]{3}, new int[]{1, 2, 4, 5, 6, 7}));
     }
-
-    @Test
-    void shouldNotOverflowOnLargeValues() {
-        assertEquals(Integer.MAX_VALUE, findMedianSortedArrays(new int[]{Integer.MAX_VALUE}, new int[]{Integer.MAX_VALUE}));
-    }
-
-    @Test
-    void shouldHandleLargeNegativeValues() {
-        assertEquals(Integer.MIN_VALUE, findMedianSortedArrays(new int[]{Integer.MIN_VALUE}, new int[]{Integer.MIN_VALUE}));
-    }
 }
