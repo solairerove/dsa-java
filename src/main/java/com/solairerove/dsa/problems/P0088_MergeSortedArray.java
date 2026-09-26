@@ -4,12 +4,16 @@ public class P0088_MergeSortedArray {
 
     // time O(m + n), space O(1)
     public static void merge(int[] nums1, int m, int[] nums2, int n) {
-        int i = m - 1, j = n - 1, k = m + n - 1;
-        while (j >= 0) {
-            if (i >= 0 && nums1[i] > nums2[j]) {
-                nums1[k--] = nums1[i--];
+        int r1 = m - 1, r2 = n - 1;
+        for (int i = m + n - 1; i >= 0; i--) {
+            if (r2 < 0) {
+                break;
+            }
+
+            if (r1 >= 0 && nums1[r1] > nums2[r2]) {
+                nums1[i] = nums1[r1--];
             } else {
-                nums1[k--] = nums2[j--];
+                nums1[i] = nums2[r2--];
             }
         }
     }
