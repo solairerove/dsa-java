@@ -6,23 +6,23 @@ public class P1095_FindInMountainArray {
 
     // time O(log n), space O(1)
     public static int findInMountainArray(int target, MountainArray mountainArr) {
-        int mountainIdx = findMountainIdx(mountainArr);
-        int leftPart = bs(mountainArr, target, 0, mountainIdx - 1, false);
-        if (leftPart == -1) {
-            return bs(mountainArr, target, mountainIdx, mountainArr.length() - 1, true);
+        int n = mountainArr.length();
+        int peakIdx = findPeak(mountainArr, n);
+        int leftRes = binarySearch(mountainArr, target, 0, peakIdx - 1, true);
+        if (leftRes != -1) {
+            return leftRes;
         }
 
-        return leftPart;
+        return binarySearch(mountainArr, target, peakIdx, n - 1, false);
     }
 
-    private static int bs(MountainArray mountainArr, int target, int l, int r, boolean isRight) {
+    private static int binarySearch(MountainArray mountainArr, int target, int l, int r, boolean isAsc) {
         while (l <= r) {
             int mid = (r + l) >>> 1;
-            if (mountainArr.get(mid) == target) {
+            int guess = mountainArr.get(mid);
+            if (guess == target) {
                 return mid;
-            } else if (!isRight && mountainArr.get(mid) < target) {
-                l = mid + 1;
-            } else if (isRight && mountainArr.get(mid) > target) {
+            } else if (isAsc == (guess < target)) {
                 l = mid + 1;
             } else {
                 r = mid - 1;
@@ -32,25 +32,17 @@ public class P1095_FindInMountainArray {
         return -1;
     }
 
-    private static int findMountainIdx(MountainArray mountainArr) {
-        int l = 0, r = mountainArr.length() - 1;
-        if (isBefore(r, mountainArr)) {
-            return mountainArr.get(r);
-        }
-
-        while (r - l > 1) {
+    private static int findPeak(MountainArray mountainArr, int n) {
+        int l = 0, r = n - 1;
+        while (l < r) {
             int mid = (r + l) >>> 1;
-            if (isBefore(mid, mountainArr)) {
-                l = mid;
+            if (mountainArr.get(mid) < mountainArr.get(mid + 1)) {
+                l = mid + 1;
             } else {
                 r = mid;
             }
         }
 
         return l;
-    }
-
-    private static boolean isBefore(int i, MountainArray mountainArr) {
-        return i == 0 || mountainArr.get(i) > mountainArr.get(i - 1);
     }
 }
