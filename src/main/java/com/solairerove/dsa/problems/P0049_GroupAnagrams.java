@@ -1,25 +1,23 @@
 package com.solairerove.dsa.problems;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class P0049_GroupAnagrams {
 
     // time O(n * k), space O(n * k)
     public static List<List<String>> groupAnagrams(String[] strs) {
-        Map<String, List<String>> freq = new HashMap<>();
+        Map<String, List<String>> map = new HashMap<>();
         for (String s : strs) {
-            int[] cnt = new int[26];
-            for (int j = 0; j < s.length(); j++) {
-                cnt[s.charAt(j) - 'a']++;
+            char[] cnt = new char[26];
+            for (int i = 0; i < s.length(); i++) {
+                cnt[s.charAt(i) - 'a']++;
             }
-            freq.computeIfAbsent(Arrays.toString(cnt), v -> new ArrayList<>()).add(s);
+            map.computeIfAbsent(new String(cnt), k -> new ArrayList<>()).add(s);
         }
 
-        return new ArrayList<>(freq.values());
+        return new ArrayList<>(map.values());
     }
 }
