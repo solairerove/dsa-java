@@ -1,41 +1,44 @@
 package com.solairerove.dsa.problems;
 
-import java.util.Arrays;
-
 public class P0912_SortAnArray {
 
     // time O(n * log(n)), space O(n)
     public static int[] sortArray(int[] nums) {
-        if (nums.length <= 1) {
-            return nums;
-        }
+        sort(nums, 0, nums.length, new int[nums.length]);
 
-        int mid = nums.length / 2;
-        int[] left = sortArray(Arrays.copyOfRange(nums, 0, mid));
-        int[] right = sortArray(Arrays.copyOfRange(nums, mid, nums.length));
-
-        return merge(left, right);
+        return nums;
     }
 
-    private static int[] merge(int[] left, int[] right) {
-        int[] merged = new int[left.length + right.length];
-        int l = 0, i = 0, r = 0;
-        while (l < left.length && r < right.length) {
-            if (left[l] <= right[r]) {
-                merged[i++] = left[l++];
+    private static void sort(int[] arr, int l, int r, int[] temp) {
+        if (r - l < 2) {
+            return;
+        }
+
+        int mid = (l + r) >>> 1;
+        sort(arr, l, mid, temp);
+        sort(arr, mid, r, temp);
+        merge(arr, l, mid, r, temp);
+    }
+
+    private static void merge(int[] arr, int l, int mid, int r, int[] temp) {
+        System.arraycopy(arr, l, temp, l, r - l);
+
+        int idx = l;
+        int i = l, j = mid;
+        while (i < mid && j < r) {
+            if (temp[i] <= temp[j]) {
+                arr[idx++] = temp[i++];
             } else {
-                merged[i++] = right[r++];
+                arr[idx++] = temp[j++];
             }
         }
 
-        while (l < left.length) {
-            merged[i++] = left[l++];
+        while (i < mid) {
+            arr[idx++] = temp[i++];
         }
 
-        while (r < right.length) {
-            merged[i++] = right[r++];
+        while (j < r) {
+            arr[idx++] = temp[j++];
         }
-
-        return merged;
     }
 }

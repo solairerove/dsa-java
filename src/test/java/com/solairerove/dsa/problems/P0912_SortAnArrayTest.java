@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 @SuppressWarnings("NewClassNamingConvention")
 class P0912_SortAnArrayTest {
@@ -76,9 +77,15 @@ class P0912_SortAnArrayTest {
     }
 
     @Test
-    void sortArray_doesNotMutateInput() {
+    void sortArray_sortsInPlace() {
         int[] nums = {4, 2, 9, 1};
-        P0912_SortAnArray.sortArray(nums);
-        assertArrayEquals(new int[]{4, 2, 9, 1}, nums);
+        int[] result = P0912_SortAnArray.sortArray(nums);
+        assertSame(nums, result);
+        assertArrayEquals(new int[]{1, 2, 4, 9}, nums);
+    }
+
+    @Test
+    void sortArray_empty() {
+        assertArrayEquals(new int[]{}, P0912_SortAnArray.sortArray(new int[]{}));
     }
 }
