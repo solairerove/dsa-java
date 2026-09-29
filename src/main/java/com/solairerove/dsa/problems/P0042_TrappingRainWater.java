@@ -2,6 +2,24 @@ package com.solairerove.dsa.problems;
 
 public class P0042_TrappingRainWater {
 
+    // time O(n), space O(1)
+    public static int trap(int[] height) {
+        int l = 0, r = height.length - 1;
+        int leftMax = 0, rightMax = 0;
+        int res = 0;
+        while (l < r) {
+            leftMax = Math.max(leftMax, height[l]);
+            rightMax = Math.max(rightMax, height[r]);
+            if (leftMax <= rightMax) {
+                res += leftMax - height[l++];
+            } else {
+                res += rightMax - height[r--];
+            }
+        }
+
+        return res;
+    }
+
     // time O(n), space O(n)
     public static int trapPrefixMax(int[] height) {
         int n = height.length;
@@ -21,26 +39,6 @@ public class P0042_TrappingRainWater {
         int res = 0;
         for (int i = 0; i < n; i++) {
             res += Math.min(pm[i], sm[i]) - height[i];
-        }
-
-        return res;
-    }
-
-    // time O(n), space O(1)
-    public static int trap(int[] height) {
-        int l = 0, r = height.length - 1;
-        int leftMax = height[l], rightMax = height[r];
-        int res = 0;
-        while (l < r) {
-            if (leftMax < rightMax) {
-                l++;
-                leftMax = Math.max(leftMax, height[l]);
-                res += leftMax - height[l];
-            } else {
-                r--;
-                rightMax = Math.max(rightMax, height[r]);
-                res += rightMax - height[r];
-            }
         }
 
         return res;
