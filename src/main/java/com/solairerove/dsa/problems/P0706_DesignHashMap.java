@@ -2,33 +2,36 @@ package com.solairerove.dsa.problems;
 
 public class P0706_DesignHashMap {
 
-    private static class ListNode {
-        private final int key;
-        private int val;
-        private ListNode next;
+    private static class Node {
+        int key;
+        int val;
+        Node next;
 
-        ListNode(int key, int val) {
+        Node() {
+        }
+
+        Node(int key, int val) {
             this.key = key;
             this.val = val;
         }
     }
 
-    private final ListNode[] map;
+    final Node[] map;
 
     public P0706_DesignHashMap() {
-        map = new ListNode[10000];
+        map = new Node[1 << 10];
         for (int i = 0; i < map.length; i++) {
-            map[i] = new ListNode(-1, -1);
+            map[i] = new Node();
         }
     }
 
     private int hash(int key) {
-        return key % map.length;
+        return key & (map.length - 1);
     }
 
     // time O(n / k), space O(1)
     public void put(int key, int value) {
-        ListNode curr = map[hash(key)];
+        Node curr = map[hash(key)];
         while (curr.next != null) {
             if (curr.next.key == key) {
                 curr.next.val = value;
@@ -36,12 +39,12 @@ public class P0706_DesignHashMap {
             }
             curr = curr.next;
         }
-        curr.next = new ListNode(key, value);
+        curr.next = new Node(key, value);
     }
 
     // time O(n / k), space O(1)
     public int get(int key) {
-        ListNode curr = map[hash(key)];
+        Node curr = map[hash(key)];
         while (curr.next != null) {
             if (curr.next.key == key) {
                 return curr.next.val;
@@ -54,7 +57,7 @@ public class P0706_DesignHashMap {
 
     // time O(n / k), space O(1)
     public void remove(int key) {
-        ListNode curr = map[hash(key)];
+        Node curr = map[hash(key)];
         while (curr.next != null) {
             if (curr.next.key == key) {
                 curr.next = curr.next.next;
