@@ -5,15 +5,15 @@ public class P0410_SplitArrayLargestSum {
     // time O(n * log(sum(nums))), space O(1)
     public static int splitArray(int[] nums, int k) {
         // res is in [max(nums)..sum(nums)]
-        int maxNum = 0, sum = 0;
+        int max = 0, sum = 0;
         for (int num : nums) {
-            maxNum = Math.max(maxNum, num);
+            max = Math.max(max, num);
             sum += num;
         }
 
-        int l = maxNum, r = sum;
+        int l = max, r = sum;
         while (l < r) {
-            int mid = l + (r - l) / 2;
+            int mid = (l + r) >>> 1;
             if (subarraysNeeded(nums, mid) > k) {
                 l = mid + 1;
             } else {
@@ -25,13 +25,13 @@ public class P0410_SplitArrayLargestSum {
     }
 
     private static int subarraysNeeded(int[] nums, int capacity) {
-        int currSum = 0, subarrays = 1;
+        int load = 0, subarrays = 1;
         for (int num : nums) {
-            if (currSum + num > capacity) {
+            if (load + num > capacity) {
+                load = num;
                 subarrays++;
-                currSum = num;
             } else {
-                currSum += num;
+                load += num;
             }
         }
 
