@@ -17,6 +17,7 @@ public class P0138_CopyListWithRandomPointer {
         }
     }
 
+    // time O(n), space O(n)
     public static Node copyRandomList(Node head) {
         Map<Node, Node> map = new HashMap<>();
 
@@ -33,6 +34,7 @@ public class P0138_CopyListWithRandomPointer {
         return map.get(head);
     }
 
+    // time O(n), space O(1)
     public static Node copyRandomListInterleave(Node head) {
         Node curr = head;
         while (curr != null) {
