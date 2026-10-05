@@ -144,4 +144,12 @@ class P0460_LFUCacheTest {
         assertEquals(2, cache.get(2));
         assertEquals(3, cache.get(3));
     }
+
+    @Test
+    void zeroCapacityStoresNothing() {
+        P0460_LFUCache cache = new P0460_LFUCache(0);
+
+        cache.put(1, 1);
+        assertEquals(-1, cache.get(1));
+    }
 }

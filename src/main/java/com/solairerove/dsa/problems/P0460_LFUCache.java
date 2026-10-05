@@ -57,10 +57,10 @@ public class P0460_LFUCache {
         }
     }
 
+    private final int capacity;
     private final Map<Integer, Node> cache;
     private final Map<Integer, DLL> freqs;
     private int minFreq;
-    private final int capacity;
 
     public P0460_LFUCache(int capacity) {
         this.capacity = capacity;
@@ -82,6 +82,10 @@ public class P0460_LFUCache {
 
     // time O(1), space O(capacity)
     public void put(int key, int value) {
+        if (capacity == 0) {
+            return;
+        }
+
         Node node = cache.get(key);
         if (node != null) {
             node.val = value;
@@ -91,8 +95,12 @@ public class P0460_LFUCache {
         }
 
         if (cache.size() == capacity) {
-            Node lru = freqs.get(minFreq).removeFromTail();
+            DLL bucket = freqs.get(minFreq);
+            Node lru = bucket.removeFromTail();
             cache.remove(lru.key);
+            if (bucket.isEmpty()) {
+                freqs.remove(minFreq);
+            }
         }
 
         node = new Node(key, value);
@@ -102,9 +110,13 @@ public class P0460_LFUCache {
     }
 
     private void touch(Node node) {
-        freqs.get(node.freq).remove(node);
-        if (node.freq == minFreq && freqs.get(node.freq).isEmpty()) {
-            minFreq++;
+        DLL bucket = freqs.get(node.freq);
+        bucket.remove(node);
+        if (bucket.isEmpty()) {
+            freqs.remove(node.freq);
+            if (node.freq == minFreq) {
+                minFreq++;
+            }
         }
         node.freq++;
         freqs.computeIfAbsent(node.freq, f -> new DLL()).insertAtHead(node);
