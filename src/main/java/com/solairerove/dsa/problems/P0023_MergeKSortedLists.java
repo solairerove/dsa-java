@@ -11,10 +11,6 @@ public class P0023_MergeKSortedLists {
             return null;
         }
 
-        if (n == 1) {
-            return lists[0];
-        }
-
         int interval = 1;
         while (interval < n) {
             for (int i = 0; i + interval < n; i += interval * 2) {
